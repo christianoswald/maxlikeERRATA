@@ -1,0 +1,43 @@
+---
+title: "Errata 3.5.1"
+author: "Michael D. Ward & John S. Ahlquist"
+date: "11/1/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 3.5.1
+
+In 3.5.1, we suggest the that the confusion matrix from a binary classifier can be tested against a
+$\chi^2$ with one degree of freedom.  This is incorrect because the rows and columns of this confusion matrix are intimately related, and can not be independent except in the rarest of circumstances. As a result they are not distributed $\chi^2$.   We are grateful to Jeff Lewis for pointing this out.
+
+To clarify, what we meant is that, as a $2 \times 2$ table, we can test for whether the processes that generated the data in the rows and columns are independent using a $\chi^2$ test.  In other words, we can distinguish the pattern of 1s and 0s produced by the model (relative to observed data) from the pattern that would be produced by a (weighted) coin flip. The code clip illustrates this and, as expected, produces a $\chi^2$ distribution. However, as we illustrate elsewhere in the book, this is not an informative comparison---and few single number summaries are---in the context of confusion matrices.     
+
+```{r warning=FALSE}
+setwd("~/Desktop/erratum")
+library(haven)
+dat <- read_dta("coburn.dta")
+set.seed(12)
+vn<-rep(dat$voteno,10) #doing this b/c actual data is small.  This increases N so asymptotics kick in
+sims <- 5000
+pvals <- numeric(sims)
+stat <- numeric(sims)
+for (i in 1:sims) {
+   new.Y<-sample(vn, length(vn), replace=F)  #permuation of actual 1s and 0s
+   the_test <- chisq.test(table(vn,new.Y))
+   pvals[i] <- the_test$p.value
+   stat[i] <- the_test$statistic
+}
+plot(density(pvals,adjust=1.2),las=1,bty="n")
+plot(density(stat,adjust=1.2))
+Z<-rchisq(10000,1)
+lines(density(Z), col="red",las=1,bty="n")
+```
+
+An interesting homework problem is to conduct a permutation test on the predictions and the observations to develop a test of independence.
+
