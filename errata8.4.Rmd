@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Section 8.4
 
-The equation describing parallel regression assumptions on page 123 (middle of the page) is incorrect. Rather, we assert that the partial derivative for the \textbf{log odds} that $Y$ is in any category with respect to the covariate information should be equal:
+The equation describing parallel regression assumptions in section 8.4 (middle of the page) is incorrect. Rather, for the case of a logit, the partial derivative for the \textbf{log odds} that $Y$ is in any category with respect to the covariate information should be equal. We illustrate this below for a model with one covariate, $x$:
 \begin{eqnarray*}
 \frac{\partial}{\partial x} 
 	\log
@@ -39,7 +39,7 @@ The equation describing parallel regression assumptions on page 123 (middle of t
 	{\textrm{Pr}(y > m - 2 | x) }
   \right) 
 &=& 
-\beta X
+\beta  
 \end{eqnarray*}     
 
-Thanks to Jeff Lewis for discovering this error.
+Thanks to Jeff Lewis for alerting us to this error.
