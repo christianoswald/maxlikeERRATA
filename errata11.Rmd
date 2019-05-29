@@ -1,0 +1,21 @@
+---
+title: "Errata 11.4.1-3"
+author: "Michael D. Ward & John S. Ahlquist"
+date: "11/1/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 11.4.1-3
+
+In definition 11.1 we define $F(t)$ as $Pr(Y^*\leq t)$ but then, in the definition of the survival function, we use $T$ (instead of $Y^*$), where T is defined further up the page.  To be consistent the $T$ in the survival function (11.1) should be  $Y^*$.
+
+On page 228-229:  After defining the Weibull Accelerated Failure Time model, let $u_i ~ EV_1$ and $\sigma$ be parameterized as $1/p$.
+
+On page 229, in the definition of the Weibull distribution in the section ``In case you were wondering'':  $E[T]$ should be $\lambda*\Gamma(1+1/p)$   (not plus).
+
